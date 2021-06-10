@@ -21,7 +21,7 @@ mysqli_query($conn, "INSERT INTO tb_last_stream (id_musik, id_user, last_stream_
 // tambah jumlah stream
 mysqli_query($conn, "UPDATE tb_musik SET stream = stream + 1 WHERE id_musik = $id_musik");
 
-$title = "Play | Stream Music";
+$title = "Play | " . $lagu['judul'] . ' - ' . $lagu['artist'];
 require 'layout/header.php';
 ?>
 <h1><?= $lagu['judul'] ?></h1>

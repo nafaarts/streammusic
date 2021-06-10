@@ -8,9 +8,9 @@ if (!isset($_SESSION['login'])) {
 
 $id_user = $_SESSION['id_user'];
 
-$query = mysqli_query($conn, "SELECT DISTINCT tb_last_stream.id_musik, MAX(tb_last_stream.last_stream_date), tb_musik.* FROM tb_last_stream JOIN tb_musik ON tb_last_stream.id_musik = tb_musik.id_musik GROUP BY tb_last_stream.id_musik ORDER BY MAX(tb_last_stream.last_stream_date) DESC, tb_last_stream.id_musik");
+$query = mysqli_query($conn, "SELECT DISTINCT tb_last_stream.id_musik, MAX(tb_last_stream.last_stream_date), tb_musik.* FROM tb_last_stream JOIN tb_musik ON tb_last_stream.id_musik = tb_musik.id_musik WHERE tb_last_stream.id_user = $id_user GROUP BY tb_last_stream.id_musik ORDER BY MAX(tb_last_stream.last_stream_date) DESC, tb_last_stream.id_musik");
 
-$title = "Home | Stream Music";
+$title = "Terakhir didengar | Stream Music";
 require 'layout/header.php';
 ?>
 

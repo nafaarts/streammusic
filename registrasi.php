@@ -7,29 +7,23 @@ if (isset($_SESSION['login'])) {
 }
 
 if (isset($_POST['submit'])) {
+    $nama = $_POST['nama'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $time = time();
 
     $query = mysqli_query($conn, "SELECT * FROM tb_user WHERE email = '$email'");
     $result = mysqli_fetch_assoc($query);
-    // var_dump($result);
-    // die;
-    if ($result) {
-        if (password_verify($password, $result['password'])) {
-
-            $_SESSION = [
-                'login' => 'true',
-                'nama' => $result['nama'],
-                'id_user' => $result['id_user'],
-                'hak_akses' => $result['hak_akses']
-            ];
-
-            header('location: index.php');
-        } else {
-            echo "<script>alert('password salah!');</script> ";
+    if (!$result) {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $query = mysqli_query($conn, "INSERT INTO tb_user (nama, email, password, date_created, hak_akses) VALUES ('$nama', '$email','$password_hash', $time, 1)");
+        if (!$query) {
+            echo mysqli_error($conn);
+            die;
         }
+        header('location: login.php?info=registered');
     } else {
-        echo "<script>alert('tidak terdaftar!')</script>";
+        echo "<script>alert('Email sudah terdaftar!')</script>";
     }
 }
 
@@ -55,13 +49,11 @@ if (isset($_POST['submit'])) {
     <div class="content col-md-6 text-white">
         <h1 class="text-center"><i class="bi bi-music-player-fill"></i> StreamMusic</h1>
         <hr>
-        <?php if (isset($_GET['info']) && ($_GET['info'] == 'registered')) : ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Selamat!</strong> akun anda berhasil didaftar, silahkan login!.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
         <form method="post" action="">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukan Nama" required>
+            </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Masukan Email" required>
@@ -71,9 +63,9 @@ if (isset($_POST['submit'])) {
                 <input type="password" class="form-control" name="password" id="password" placeholder="Masukan Password" required>
             </div>
             <center>
-                <button type="submit" name="submit" class="btn btn-danger mt-3"><i class="bi bi-door-open-fill"></i> Submit</button>
+                <button type="submit" name="submit" class="btn btn-danger mt-3"><i class="bi bi-door-open-fill"></i> Daftar</button>
                 <hr>
-                <small class="text-center">Belum punya akun! <a class="text-danger" href="registrasi.php">Daftar</a></small>
+                <small class="text-center">Sudah punya akun! <a class="text-danger" href="login.php">Login</a></small>
             </center>
         </form>
     </div>

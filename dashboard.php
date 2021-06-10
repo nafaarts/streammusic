@@ -16,7 +16,7 @@ require 'layout/header.php';
 <h1>Dashboard</h1>
 <hr>
 <a href="tambah.php" class="btn btn-danger mb-3"><i class="bi bi-plus-lg"></i> Tambah Lagu</a>
-<?php if (isset($_GET['info']) && $_GET['info'] == 'added') : ?>
+<?php if (isset($_GET['info']) && ($_GET['info'] == 'added')) : ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Selamat!</strong> Musik berhasil di Upload!.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
