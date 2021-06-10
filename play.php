@@ -13,10 +13,13 @@ $lagu = mysqli_fetch_assoc($query);
 
 $query_musik = mysqli_query($conn, "SELECT * FROM tb_musik WHERE id_musik <> $id_musik");
 
+$id_user = $_SESSION['id_user'];
+$time = time();
 
+// tambah ke last listen
+mysqli_query($conn, "INSERT INTO tb_last_stream (id_musik, id_user, last_stream_date) VALUES ($id_musik, $id_user, $time)");
 // tambah jumlah stream
 mysqli_query($conn, "UPDATE tb_musik SET stream = stream + 1 WHERE id_musik = $id_musik");
-
 
 $title = "Play | Stream Music";
 require 'layout/header.php';

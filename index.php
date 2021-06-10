@@ -48,7 +48,10 @@ require 'layout/header.php';
                 <td><?= $result['artist'] ?></td>
                 <td><?= $result['durasi'] ?></td>
                 <td><?= $result['stream'] ?> Stream</td>
-                <th><a href="play.php?id=<?= $result['id_musik'] ?>" class="play"><i class="bi bi-play-circle-fill me-2"></i> PLAY</a></th>
+                <th>
+                    <a href="play.php?id=<?= $result['id_musik'] ?>" class="play"><i class="bi bi-play-circle-fill me-2"></i> PLAY</a>
+                    <a href="addFavorite.php?id=<?= $result['id_musik'] ?>" class="ms-3 play"><i class="bi bi-heart-fill me-2"></i> FAVORITE</a>
+                </th>
             </tr>
         <?php endwhile; ?>
     </tbody>
